@@ -37,7 +37,7 @@ public class CamundaCodeChallengeApplication {
 		@Override
 		public void run(String... args) throws Exception {
 			// Put your logic here
-			System.out.println("Hiiiii ...");
+
 			BpmnModel bpmnModel = bpmnService.readBpmn();
 			InputStream inputStream = new ByteArrayInputStream(bpmnModel.getBpmn20Xml().getBytes());
 			BpmnModelInstance modelInstance = Bpmn.readModelFromStream(inputStream);

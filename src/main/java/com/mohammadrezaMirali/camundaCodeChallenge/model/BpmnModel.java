@@ -1,5 +1,6 @@
 package com.mohammadrezaMirali.camundaCodeChallenge.model;
 
+import org.camunda.bpm.model.bpmn.instance.EndEvent;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 
@@ -7,9 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by mmirali on 13/01/2019.
- */
+
 public class BpmnModel implements Serializable{
     private String id;
     private String bpmn20Xml;
@@ -42,18 +41,21 @@ public class BpmnModel implements Serializable{
         visitedSet.add(source.getTarget().getId());
         source.getTarget().getOutgoing().forEach(sequenceFlow ->
         {
-            if(!visitedSet.contains(sequenceFlow.getTarget().getId()))
+            if(!visitedSet.contains(sequenceFlow.getTarget().getId())||sequenceFlow.getTarget().getElementType() instanceof EndEvent)
             {
                 path.add(sequenceFlow.getTarget().getId());
                 printPath(sequenceFlow,dest,path,visitedSet);
-                path.remove(sequenceFlow.getTarget().getId());
+            }
+            else
+            {
+                for(int x= path.size()-1;x>=0;x--)
+                {
+                    if(path.get(x).equals(sequenceFlow.getTarget().getId()))
+                        break;
+                    path.remove(x);
+                }
             }
         });
 
-        visitedSet.remove(source.getTarget().getId());
-
-
-//        source.getOutgoing().forEach(sequenceFlow -> System.out.println(sequenceFlow.getTarget().getId()));
-//        System.out.println(source.getOutgoing());
     }
 }

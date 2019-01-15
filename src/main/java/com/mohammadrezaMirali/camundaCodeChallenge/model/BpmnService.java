@@ -24,4 +24,9 @@ public class BpmnService {
         BpmnModel bpmnModel = builder.get(BpmnModel.class);
         return bpmnModel;
     }
+
+    public void printBpmnBetweenTwoNode(String source,String dest)
+    {
+
+    }
 }
